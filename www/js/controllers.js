@@ -4,8 +4,8 @@ angular.module('starter.controllers', [])
 
   $scope.posts = [];
 
-  $scope.getPosts = function(){
-    var posOptions = {timeout: 10000, enableHighAccuracy: false};
+var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  $ionicPlatform.ready(function(){
     $cordovaGeolocation
       .getCurrentPosition(posOptions)
       .then(function (position) {
@@ -13,6 +13,9 @@ angular.module('starter.controllers', [])
       }, function(err) {
         // error
       });
+  });
+  $scope.getPosts = function(){
+    
    return $http({
       url:'https://shoutshout.herokuapp.com/api/posts'
     }).then(function(data){

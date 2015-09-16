@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var ShoutApp = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+var ShoutApp = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
 
 ShoutApp.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
