@@ -1,0 +1,26 @@
+<ion-view view-title="Post">
+  <ion-content>
+  <div class="list card">
+      <div class="item item-body">
+        <div>
+          <h2>{{post.post}}</h2>
+          <h3>{{post.date | longAgo}}</h3>
+        </div>
+      </div>
+    </div>
+    <div id="commentBox">
+      <h4>{{post.comments.length > 0 ? 'Add a comment!' : 'Be the first to comment!'}}</h4>
+      <label class="item item-input"> 
+          <textarea placeholder="What's up?" ng-model="comment.comment"></textarea>
+          </label>
+          <button type="submit" class="button button-energized" ng-click="newComment()">Comment</button>
+    </div>
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="comment in post.comments" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
+        <h2>{{comment.comment}}</h2>
+        <p>{{comment.date | longAgo}}</p>
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>
