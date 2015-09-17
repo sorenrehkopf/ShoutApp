@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 var ShoutApp = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
 
-ShoutApp.run(function($ionicPlatform) {
+ShoutApp.run(function($ionicPlatform,$rootScope,$cordovaGeolocation) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -15,7 +15,22 @@ ShoutApp.run(function($ionicPlatform) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
 
-    }
+    };
+    $rootScope.location = {
+      lat:null,
+      lon:null
+    };
+    $ionicPlatform.ready(function(){
+    var posOptions = {timeout: 10000, enableHighAccuracy: false};
+    $cordovaGeolocation
+      .getCurrentPosition(posOptions)
+      .then(function (position) {
+        $rootScope.location.lat = position.coords.latitude;
+        $rootScope.location.lon = position.coords.longitude;
+      }, function(err) {
+        // error
+      });
+  });
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
