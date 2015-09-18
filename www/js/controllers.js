@@ -4,7 +4,7 @@ angular.module('starter.controllers', [])
   $scope.posts = [];
   $scope.newPosts = 0;
   $scope.offset = 0;
-  $scope.button = 'button-light'
+  $scope.button = 'button-light';
   $ionicPlatform.ready(function(){
     var posOptions = {timeout: 10000, enableHighAccuracy: true};
     $cordovaGeolocation
@@ -12,6 +12,7 @@ angular.module('starter.controllers', [])
       .then(function (position) {
         $rootScope.location.lat = position.coords.latitude;
         $rootScope.location.lon = position.coords.longitude;
+        $rootScope.locSetTime = new Date();
       }, function(err) {
         // error
       });
@@ -25,7 +26,7 @@ angular.module('starter.controllers', [])
         '/'+$rootScope.range+
         '/'+$scope.offset
       }).then(function(data){
-          console.log(data,$rootScope.range);
+          // console.log(data,$rootScope.range);
           if($scope.offset > 0){
           for(i=0;i<data.data.length;i++){
           $scope.posts.push(data.data[i])
@@ -64,13 +65,14 @@ angular.module('starter.controllers', [])
       url:'http://shoutshout.herokuapp.com/api/posts/'+$stateParams.postId
     }).then(function(data){
         $scope.post = data.data;
-        console.log($scope.post)
+        // console.log($scope.post);
     });
   };
   $scope.getPost();
 
   $scope.comment ={
-    comment:''
+    comment:'',
+    poster:$rootScope.first +' '+ $rootScope.last
   };
 
   $scope.newComment = function(){
@@ -78,7 +80,7 @@ angular.module('starter.controllers', [])
     return $http({
       method: 'POST',
       url:'http://shoutshout.herokuapp.com/api/posts/'+$stateParams.postId,
-      data: $httpParamSerializerJQLike({comment:$scope.comment.comment}),
+      data: $httpParamSerializerJQLike({comment:$scope.comment.comment,poster:$scope.comment.poster}),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(data){
       $scope.comment.comment = ""
@@ -98,6 +100,7 @@ angular.module('starter.controllers', [])
 
   $scope.shout ={
     post:'',
+    poster:$rootScope.first +' '+ $rootScope.last,
     location:{
       lon:$rootScope.location.lon,
       lat:$rootScope.location.lat
@@ -105,17 +108,20 @@ angular.module('starter.controllers', [])
   };
 
   $scope.newShout = function(){
-
+    if (!$rootScope.location.lon ||!$rootScope.location.lat){
+      alert("Looks like your location isn't set. Try updating it in settings!")
+    }else{
     return $http({
       method: 'POST',
       url:'http://shoutshout.herokuapp.com/api/posts',
-      data: $httpParamSerializerJQLike({post:$scope.shout.post,location:$scope.shout.location}),
+      data: $httpParamSerializerJQLike({post:$scope.shout.post,location:$scope.shout.location,poster:$scope.shout.poster}),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(data){
       socket.emit('new post',{location:$scope.shout.location})
       $scope.shout.post = '';
       $window.location.href = '#/tab/post/'+data.data._id
     });
+    };
   };
 
 })
@@ -124,9 +130,24 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope,$rootScope) {
-  $scope.block = 'radio-icon';
+.controller('AccountCtrl', function($scope,$rootScope,$ionicPlatform,$cordovaGeolocation) {
+  $scope.setTime = $rootScope.locSetTime;
   $scope.setRange = function(range){
     $rootScope.range = range
+  }
+  $scope.resetLocation = function(){
+    $ionicPlatform.ready(function(){
+    var posOptions = {timeout: 10000, enableHighAccuracy: true};
+    $cordovaGeolocation
+      .getCurrentPosition(posOptions)
+      .then(function (position) {
+        $rootScope.location.lat = position.coords.latitude;
+        $rootScope.location.lon = position.coords.longitude;
+        $rootScope.locSetTime = new Date();
+        console.log($rootScope.location,$rootScope.locSetTime)
+      }, function(err) {
+        // error
+      });
+  });
   }
 });

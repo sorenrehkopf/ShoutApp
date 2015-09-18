@@ -3,6 +3,7 @@
   <div class="list card">
       <div class="item item-body">
         <div>
+          <h3>{{post.poster ? post.poster : 'userwithoutaname'}}</h3>
           <h2>{{post.post}}</h2>
           <h3>{{post.date | longAgo}}</h3>
         </div>
@@ -17,6 +18,7 @@
     </div>
     <div class="list">
       <li class="item item-text-wrap" ng-repeat="comment in post.comments" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
+        <h3>{{comment.poster ? comment.poster : 'userwithoutaname'}}</h3>
         <h2>{{comment.comment}}</h2>
         <p>{{comment.date | longAgo}}</p>
       </li>

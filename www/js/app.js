@@ -11,7 +11,7 @@ var ShoutApp = angular.module('ShoutApp', ['ionic', 'starter.controllers', 'star
     $ionicConfigProvider.tabs.position('bottom');
 })
 
-ShoutApp.run(function($ionicPlatform,$rootScope,$cordovaGeolocation) {
+ShoutApp.run(function($ionicPlatform,$rootScope,$cordovaGeolocation,$http) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -25,6 +25,19 @@ ShoutApp.run(function($ionicPlatform,$rootScope,$cordovaGeolocation) {
       lon:null
     };
     $rootScope.range = 0.0006;
+    $rootScope.locSetTime = new Date();
+    $rootScope.first;
+    $rootScope.last;
+    $http({
+      url:'http://randomword.setgetgo.com/get.php'
+    }).then(function(data){
+      $rootScope.first = data.data;
+    });
+    $http({
+      url:'http://randomword.setgetgo.com/get.php'
+    }).then(function(data){
+      $rootScope.last = data.data;
+    });
     $ionicPlatform.ready(function(){
     var posOptions = {timeout: 10000, enableHighAccuracy: true};
     $cordovaGeolocation
@@ -32,6 +45,7 @@ ShoutApp.run(function($ionicPlatform,$rootScope,$cordovaGeolocation) {
       .then(function (position) {
         $rootScope.location.lat = position.coords.latitude;
         $rootScope.location.lon = position.coords.longitude;
+        $rootScope.locSetTime = new Date();
       }, function(err) {
         // error
       });

@@ -20,3 +20,6 @@ ion-view{
 .left{
 	text-align: left;
 }
+.card a{
+	text-decoration: none;
+}
