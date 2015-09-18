@@ -19,7 +19,7 @@ angular.module('starter.controllers', [])
   $scope.getPosts = function(){
     if(!$rootScope.location.lon || !$rootScope.location.lat) return;
      return $http({
-        url:'http://localhost:3000/api/posts/'+
+        url:'http://shoutshout.herokuapp.com/api/posts/'+
         $rootScope.location.lon+
         '/'+$rootScope.location.lat+
         '/'+$rootScope.range+
@@ -61,7 +61,7 @@ angular.module('starter.controllers', [])
   $scope.post = {}
   $scope.getPost = function(){
    return $http({
-      url:'http://localhost:3000/api/posts/'+$stateParams.postId
+      url:'http://shoutshout.herokuapp.com/api/posts/'+$stateParams.postId
     }).then(function(data){
         $scope.post = data.data;
         console.log($scope.post)
@@ -77,7 +77,7 @@ angular.module('starter.controllers', [])
     console.log($scope.comment.comment);
     return $http({
       method: 'POST',
-      url:'http://localhost:3000/api/posts/'+$stateParams.postId,
+      url:'http://shoutshout.herokuapp.com/api/posts/'+$stateParams.postId,
       data: $httpParamSerializerJQLike({comment:$scope.comment.comment}),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(data){
@@ -87,7 +87,7 @@ angular.module('starter.controllers', [])
   };
   socket.on('new comment', function(){
     return $http({
-        url:'http://localhost:3000/api/posts/'+$stateParams.postId
+        url:'http://shoutshout.herokuapp.com/api/posts/'+$stateParams.postId
       }).then(function(data){
           $scope.post.comments = data.data.comments;
       });
@@ -108,7 +108,7 @@ angular.module('starter.controllers', [])
 
     return $http({
       method: 'POST',
-      url:'http://localhost:3000/api/posts',
+      url:'http://shoutshout.herokuapp.com/api/posts',
       data: $httpParamSerializerJQLike({post:$scope.shout.post,location:$scope.shout.location}),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(data){

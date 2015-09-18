@@ -41,6 +41,7 @@ ShoutApp.run(function($ionicPlatform,$rootScope,$cordovaGeolocation) {
       StatusBar.styleLightContent();
     }
   });
+
 })
 
 ShoutApp.config(function($stateProvider, $urlRouterProvider) {
