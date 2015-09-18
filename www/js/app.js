@@ -5,7 +5,11 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var ShoutApp = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova','ngSanitize','btford.socket-io'])
+var ShoutApp = angular.module('ShoutApp', ['ionic', 'starter.controllers', 'starter.services','ngCordova','ngSanitize','btford.socket-io'])
+
+.config(function($ionicConfigProvider) {
+    $ionicConfigProvider.tabs.position('bottom');
+})
 
 ShoutApp.run(function($ionicPlatform,$rootScope,$cordovaGeolocation) {
   $ionicPlatform.ready(function() {
@@ -20,8 +24,9 @@ ShoutApp.run(function($ionicPlatform,$rootScope,$cordovaGeolocation) {
       lat:null,
       lon:null
     };
+    $rootScope.range = 0.0006;
     $ionicPlatform.ready(function(){
-    var posOptions = {timeout: 10000, enableHighAccuracy: false};
+    var posOptions = {timeout: 10000, enableHighAccuracy: true};
     $cordovaGeolocation
       .getCurrentPosition(posOptions)
       .then(function (position) {

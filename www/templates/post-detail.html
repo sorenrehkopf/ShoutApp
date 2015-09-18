@@ -11,16 +11,16 @@
     <div id="commentBox">
       <h4>{{post.comments.length > 0 ? 'Add a comment!' : 'Be the first to comment!'}}</h4>
       <label class="item item-input"> 
-          <textarea placeholder="What's up?" ng-model="comment.comment"></textarea>
+          <textarea class="commPut" ng-keydown="buttonActivate()" placeholder="What's up?" ng-model="comment.comment"></textarea>
           </label>
-          <button type="submit" class="button button-energized" ng-click="newComment()">Comment</button>
+          <button type="submit" ng-disabled="comment.comment.length <= 4" class="button button-block button-energized" ng-click="newComment()">Comment</button>
     </div>
-    <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="comment in post.comments" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
+    <div class="list">
+      <li class="item item-text-wrap" ng-repeat="comment in post.comments" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
         <h2>{{comment.comment}}</h2>
         <p>{{comment.date | longAgo}}</p>
-      </ion-item>
-    </ion-list>
+      </li>
+    </div-list>
 
   </ion-content>
 </ion-view>

@@ -1,1 +1,22 @@
 /* Empty. Add your own CSS if you like */
+
+.bottom{
+	position:fixed bottom;
+}
+body{
+	text-align: center;
+}
+ion-view{
+	background-color: rgb(150,150,150);
+}
+.shoutPut{
+	height:30vh;
+	max-height:74vh;
+	/*margin-top:10vh;*/
+}
+.commPut{
+	height:10vh;
+}
+.left{
+	text-align: left;
+}

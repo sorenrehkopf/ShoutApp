@@ -1,9 +1,29 @@
 <ion-view view-title="Account">
   <ion-content>
     <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
+    <div class="item item-divider">Earshot.</div>
+	    <label class="item item-radio left" ng-click="setRange(0.0002)">
+	    <input type="radio" name="group">
+		    <div class="item-content">
+		      Room (about 30ft)
+		    </div>
+		    <i class="radio-icon ion-checkmark"></i>
+	  	</label>
+	  	<label class="item item-radio left" ng-click="setRange(0.0006)">
+	    <input type="radio" name="group">
+		    <div class="item-content">
+		      Building (about 100ft)
+		    </div>
+		    <i class="radio-icon ion-checkmark"></i>
+	  	</label>
+	  	<label class="item item-radio left" ng-click="setRange(0.0011)">
+	    <input type="radio" name="group">
+		    <div class="item-content">
+		      Block (about 200ft)
+		    </div>
+		    <i class="radio-icon ion-checkmark"></i>
+	  	</label>
+	<div class="item item-divider">Notifications.</div>
     </ion-list>
   </ion-content>
 </ion-view>

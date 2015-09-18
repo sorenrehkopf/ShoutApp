@@ -1,6 +1,8 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="Listen!">
   <ion-content class="padding">
-    <div class="list card" ng-repeat="post in posts">
+  <button class="button button-block button-calm" ng-show="newPosts > 0" ng-click="setOff(0);getPosts()">{{newPosts > 0 ? newPosts+' new shouts near you!' : 'Up to date!'}}</button>
+  <h2 ng-show="posts.length === 0">Looks like no one's been shouting near here. Be the first!</h2>
+    <div class="list card" ng-repeat="post in posts track by $index">
       <div class="item item-body">
         <div>
           <a href="#/tab/post/{{post._id}}"><h2>{{post.post}}</h2></a>
@@ -9,5 +11,7 @@
         </div>
       </div>
     </div>
+    <button class="button button-block button-balanced" ng-show="moar" ng-click="setOff(offset+10);getPosts()">Listen into the past farther!</button>
+    <h4 ng-hide="moar">You have reached the end of time for this location!</h4>
   </ion-content>
 </ion-view>

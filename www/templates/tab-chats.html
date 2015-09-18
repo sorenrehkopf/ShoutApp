@@ -2,9 +2,9 @@
   <ion-content>
     <div class="list">
         <label class="item item-input">
-        <textarea placeholder="What's up?" ng-model="shout.post"></textarea>
+        <textarea class="shoutPut" ng-keydown="buttonActivate()" placeholder="What's up?" ng-model="shout.post"></textarea>
         </label>
-        <button type="submit" class="button button-energized" ng-click="newShout()">Shout!</button>
+        <button type="submit" ng-disabled="shout.post.length < 5" class="button button-block button-energized" ng-click="newShout()">Shout!</button>
     </div>
   </ion-content>
 </ion-view>
